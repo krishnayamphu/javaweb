@@ -1,0 +1,25 @@
+*{
+    font-family: Arial;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.login-form{
+    width: 300px;
+    padding: 15px;
+    margin: 10% auto;
+    box-shadow: 0 0 5px 5px #e7e7e7;
+}
+.login-form h4{
+    margin-bottom: 10px;
+}
+.login-form input{
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.login-form button{
+    padding: 2px 15px;
+}
