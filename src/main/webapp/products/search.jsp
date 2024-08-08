@@ -11,9 +11,15 @@
 <body>
 <div class="container">
 <div class="d-flex justify-content-between py-4 border-bottom-1">
-    <h3>Products</h3>
-    <a class="btn btn-outline-secondary" href="product-add">Add Product</a>
+    <h3>Products <small>(${totalProducts})</small></h3>
+    <a class="btn btn-outline-secondary" href="products">Products</a>
 </div>
+    <form action="search">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="name" placeholder="search product">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
     <table class="table table-striped">
         <thead>
         <tr>
