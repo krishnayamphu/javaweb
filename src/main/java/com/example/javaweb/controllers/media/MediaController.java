@@ -10,13 +10,24 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@WebServlet(name = "MediaController", value = "/upload-media")
+@WebServlet(name = "MediaController", value = "/media")
 public class MediaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String rootPath=getServletContext().getRealPath("/uploads");
+        File f=new File(rootPath);
+        File[] files=f.listFiles();
+        ArrayList<String> items=new ArrayList<>();
+        if(files!=null){
+            for(File item:files){
+                items.add(item.getName());
+            }
+        }
+        request.setAttribute("items",items);
         request.getRequestDispatcher("media/upload.jsp").forward(request,response);
     }
 
@@ -45,9 +56,21 @@ public class MediaController extends HttpServlet {
                         //processFormField(item);
                         //regular form input e.g. email,password
                     } else {
+//                        String fieldName = item.getFieldName();
+//                        String fileName = item.getName();
+//                        String contentType = item.getContentType();
+//                        boolean isInMemory = item.isInMemory();
+//                        long sizeInBytes = item.getSize();
+//
+//                        System.out.println(fieldName);
+//                        System.out.println(fileName);
+//                        System.out.println(contentType);
+//                        System.out.println(isInMemory);
+//                        System.out.println(sizeInBytes);
+
                         String rootPath=getServletContext().getRealPath("/uploads");
                         processUploadedFile(item,rootPath);
-                        response.sendRedirect("file-upload");
+                        response.sendRedirect("media");
                     }
                 }
             } catch (FileUploadException e) {
@@ -58,7 +81,6 @@ public class MediaController extends HttpServlet {
             response.getWriter().println("error in uploading file.");
         }
     }
-
     private void processUploadedFile(FileItem item,String rootPath) {
         String fileName = item.getName();
         File path = new File(rootPath);
