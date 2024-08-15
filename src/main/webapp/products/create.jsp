@@ -15,7 +15,7 @@
     <a class="btn btn-outline-secondary" href="products">All Products</a>
 </div>
 
-    <form action="product-add" method="post">
+    <form action="product-add" method="post" enctype="multipart/form-data">
         <input class="form-control mb-4" type="text" name="name" placeholder="Product Name" required>
         <input class="form-control mb-4" type="number" name="price" placeholder="Price" required>
 
@@ -25,8 +25,14 @@
                 <option value="${item.id}">${item.name}</option>
             </c:forEach>
         </select>
-        <input class="form-control mb-4" type="text" placeholder="Product Image" name="image" value="default.jpg">
-<button class="btn btn-success">Submit</button>
+<%--        <input class="form-control mb-4" type="text" placeholder="Product Image" name="image" value="default.jpg">--%>
+
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" name="upfile" placeholder="choose a file">
+            <button class="btn btn-outline-secondary" type="submit">Upload</button>
+        </div>
+
+        <button class="btn btn-success">Submit</button>
     </form>
 
 </div>

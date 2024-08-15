@@ -1,5 +1,6 @@
 package com.example.javaweb.controllers.media;
 
+import com.example.javaweb.events.MyProgressListener;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -33,6 +34,7 @@ public class MediaController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //	public static final long MAX_UPLOAD_IN_MEGS = 50;
         // Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if(isMultipart){
@@ -46,7 +48,13 @@ public class MediaController extends HttpServlet {
 
             // Create a new file upload handler
             ServletFileUpload upload = new ServletFileUpload(factory);
+//            upload.setSizeMax(MAX_UPLOAD_IN_MEGS * 1024 * 1024);
 
+            MyProgressListener progressListener = new MyProgressListener();
+            upload.setProgressListener(progressListener);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("progressListener", progressListener);
             try {
                 // Parse the request
                 List<FileItem> items = upload.parseRequest(request);
