@@ -4,6 +4,7 @@ import com.example.javaweb.database.ConnectDB;
 import com.example.javaweb.models.Product;
 import com.example.javaweb.models.User;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +71,31 @@ public class ProductDAO {
             ps.setString(4, product.getImg());
             if (ps.executeUpdate() == 1) {
                 status = true;
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        con.close();
+        return status;
+    }
+    public static boolean delete(int id,String path,String imageName) throws SQLException {
+        boolean status = false;
+        Connection con = null;
+        try {
+            con = ConnectDB.connect();
+            String sql = "DELETE FROM products WHERE id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            if (ps.executeUpdate() == 1) {
+                status = true;
+                File f=new File(path+"/"+imageName);
+                if(f.exists()){
+                    f.delete();
+                }
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

@@ -35,9 +35,13 @@
                 <td>
                     <img style="width: 50px" src="uploads/${product.img}" alt="">
                 </td>
-                <td>
-                    <a class="btn btn-primary"  href="#">Edit</a>
-                    <a class="btn btn-danger ms-2" href="#">Remove</a>
+                <td class="d-flex align-items-center">
+                    <a class="btn btn-primary me-2"  href="#">Edit</a>
+                    <form action="products" method="post">
+                        <input type="hidden" name="id" value="${product.id}">
+                        <input type="hidden" name="img" value="${product.img}">
+                        <button class="btn btn-danger" >Remove</button>
+                    </form>
                 </td>
             </tr>
         </c:forEach>

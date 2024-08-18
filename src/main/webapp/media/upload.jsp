@@ -16,7 +16,6 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-6">
-      <p>${progressListener.getMegaBytes()}
       </p>
       <form action="media" method="post" enctype="multipart/form-data">
         <div class="input-group mb-3">

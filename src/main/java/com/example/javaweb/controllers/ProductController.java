@@ -28,6 +28,14 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        int id=Integer.parseInt(request.getParameter("id"));
+        String img=request.getParameter("img");
+        String path = getServletContext().getRealPath("/uploads");
+        try {
+            ProductDAO.delete(id,path,img);
+            response.sendRedirect("products");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

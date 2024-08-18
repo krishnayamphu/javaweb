@@ -15,8 +15,10 @@ import javax.servlet.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 @WebServlet(name = "ProductAddController", value = "/product-add")
 public class ProductAddController extends HttpServlet {
@@ -64,11 +66,12 @@ public class ProductAddController extends HttpServlet {
                     }
                 }
                 ProductDAO.save(new Product(name, price, img, category_id));
-                System.out.println(name);
-                System.out.println(price);
-                System.out.println(img);
-                System.out.println(category_id);
+//                System.out.println(name);
+//                System.out.println(price);
+//                System.out.println(img);
+//                System.out.println(category_id);
                 System.out.println("data saved");
+                response.sendRedirect("products");
             } catch (FileUploadException | SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -92,7 +95,20 @@ public class ProductAddController extends HttpServlet {
     }
 
     private void processUploadedFile(FileItem item,String rootPath) {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        System.out.println(generatedString);
+
         String fileName = item.getName();
+        LocalDateTime date= LocalDateTime.now();
         img=fileName;
         File path = new File(rootPath);
         if (!path.exists()) {
